@@ -98,6 +98,7 @@ def fbconnect():
   flash ("Now logged in as %s" % login_session['username'])
   return output
 
+ #Function to disconnect from FB OAUTH
 @app.route('/fbdisconnect')
 def fbdisconnect():
   facebook_id = login_session['facebook_id']
@@ -107,6 +108,7 @@ def fbdisconnect():
   return "you have been logged out"
 @app.route('/gconnect', methods=['POST'])
 
+#Function to connect with Google OAUTH 
 def gconnect():
 #Validate state token 
   if request.args.get('state') != login_session['state']:
@@ -238,24 +240,28 @@ def gdisconnect():
     
 #JSON methods
 
+#Function that queries to pull all restaurants - JSON
 @app.route('/restaurants/JSON/')
 def showRestaurantsJSON():
     restaurant = session.query(Restaurant).all()
     return jsonify(Restaurant=[i.serialize for i in restaurant])
-    
+
+#Function that queries a specific restaurants menu - JSON
 @app.route('/restaurant/<int:restaurant_id>/menu/JSON/')
 def restaurantMenuJSON(restaurant_id):
 	restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
 	items = session.query(MenuItem).filter_by(restaurant_id = restaurant_id).all()
 	return jsonify(MenuItems=[i.serialize for i in items])
     
+#Function that queries a specific menu item - JSON
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/JSON/')
 def menuItemJSON(restaurant_id, menu_id):
 	menuItem = session.query(MenuItem).filter_by(id = menu_id).one()
 	return jsonify(MenuItems=[menuItem.serialize])      
 
 #Page display methods - all pages that need to be rendered, or have POST/GET commands can be found here
-    
+
+#Query to pull all restaurants and display them as the homepage    
 @app.route('/')
 @app.route('/restaurants/')
 def showRestaurants():
@@ -265,6 +271,7 @@ def showRestaurants():
     else:
         return render_template('restaurants.html', restaurants = restaurants)
 
+#Function to create a new restaurant
 @app.route('/restaurant/new/', methods=['GET','POST'])
 def newRestaurant():
     if 'username' not in login_session:
@@ -278,6 +285,7 @@ def newRestaurant():
     else:
         return render_template('newRestaurant.html')
 
+#Function to edit a restaurant
 @app.route('/restaurant/<int:restaurant_id>/edit/', methods=['GET','POST'])
 def editRestaurant(restaurant_id):
     if 'username' not in login_session:
@@ -295,6 +303,7 @@ def editRestaurant(restaurant_id):
     else:
 		return render_template('editRestaurant.html', restaurant = editedRestaurant)      
 
+#Function to delete a restaurant
 @app.route('/restaurant/<int:restaurant_id>/delete/', methods=['GET','POST'])
 def deleteRestaurant(restaurant_id):
     if 'username' not in login_session:
@@ -312,6 +321,7 @@ def deleteRestaurant(restaurant_id):
     else:
         return render_template('deleteRestaurant.html', restaurant = deleteRestaurant)
 
+#Function that queries a specific restaurants menu
 @app.route('/restaurant/<int:restaurant_id>/')    
 @app.route('/restaurant/<int:restaurant_id>/menu/')
 def showMenu(restaurant_id):
@@ -322,7 +332,8 @@ def showMenu(restaurant_id):
         return render_template('publicmenu.html', menu = items, restaurant = restaurant, creator= creator)
     else:
         return render_template('menu.html', menu = items, restaurant = restaurant,creator = creator)
-    
+
+#Function that creates a new item on a specific menu
 @app.route('/restaurant/<int:restaurant_id>/menu/new/', methods=['GET','POST'])
 def newMenuItem(restaurant_id):
     if 'username' not in login_session:
@@ -339,6 +350,7 @@ def newMenuItem(restaurant_id):
     else:
         return render_template('newMenuItem.html', restaurant = restaurant)
 
+#Function that queries an item and allows it to be edited based on user input
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit/', methods=['GET','POST'])
 def editMenuItem(restaurant_id, menu_id):
     if 'username' not in login_session:
@@ -363,6 +375,7 @@ def editMenuItem(restaurant_id, menu_id):
     else:
         return render_template('editMenuItem.html', restaurant = restaurant, menu_id = menu_id, item = editedItem)    
     
+#Function that queries an item and allows it to be deleted based on user input
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete/', methods=['GET','POST'])
 def deleteMenuItem(restaurant_id, menu_id):
     if 'username' not in login_session:
@@ -378,7 +391,8 @@ def deleteMenuItem(restaurant_id, menu_id):
         return redirect(url_for('showMenu', restaurant_id = restaurant_id))
     else:
         return render_template('deleteMenuItem.html', restaurant = restaurant, menu_id = menu_id, item = itemToDelete)
-        
+ 
+#Allows a user to logout
 @app.route('/disconnect')
 def disconnect():
     if 'provider' in login_session:

@@ -17,9 +17,13 @@ INTRODUCTION
 
 REQUIREMENTS
 -------------------------------------
- A. You will need Python installed (instructions for its installation can be found below. 
- B. You will need some means of standing up a database. In this project we are using PostgreSQL and a file is included to create the table structure needed for the python project to run.
-
+ A. You will need Python installed (instructions for its installation can be found below). 
+ B. You will need Werkzeug installed (v0.8.3).
+ C. You will need Flask installed (v0.9).
+ D. You will need Flask Login installed (v0.1.3).
+ 
+ Note: If running this on the UDACITY class provided Vagrant instance, you will need to downgrade manually to avoid the error: "raise TypeError(repr(o) + " is not JSON serializable") TypeError: <oauth2client.client.OAuth2Credentials object at 0xb57ea42c> is not JSON serializable"
+ 
 INSTALLATION OF PYTHON
 -------------------------------------
  We will be using Python v2.7.9 for this Project so please ensure you have it installed. If you already do - you can skip this step. If you are not sure, or want to reinstall please continue.
@@ -34,11 +38,21 @@ HOW TO RUN THE PYTHON PROJECT SCRIPT
 -------------------------------------
  Now that you have Python running on your machine. Let continue by running our Project!
  
- 1. Download all files related to the project and delopy them to whatever location you'd like.
+ 1. Download all files related to the project and delopy them to whatever location you'd like. Keep in mind the folder structure should be kept intact for code references to work.
  2. The DB file has used for testing the application has been included, but incase you'd like to create your own:
     a. Delete "restaurantmenuwithusers.db"
     b. Run the python program: database_setup.py - this will create the database for you.
     c. Run the python program: lotsofmenus.py - this will load the database with data so you don't have to do it manually.
     d. You now have a recreated: db file named: restaurantmenuwithusers.db
  3. Now run the python program: finalproject.py - your browser will now load and you can navigate through the webpage for testing!
+ 
+EDITING THE CODE FOR YOUR OWN USE
+-------------------------------------
+ Now that you have the code running, if there is anything you'd like to change you can simply access that part of the application and edit it.
+
+ A. For visuals, feel free to edit HTML directly in the TEMPLATES folder, or CSS in the STATIC folder. 
+ B. All code structure, and CRUD features can be edited in the FINALPROJECT.py file.
+ C. Any changes to the DB would occur in the database_setup.py file, and references would have to be edited in the FINALPROJECT.py file to ensure proper accessing/function is kept intact.
+
+ 
  
