@@ -309,10 +309,8 @@ def deleteRestaurant(restaurant_id):
     if 'username' not in login_session:
         return redirect('/login')
     deleteRestaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
-    if restaurantToDelete.user_id != login_session['user_id']:
+    if deleteRestaurant.user_id != login_session['user_id']:
         return "<script>function myFunction() {alert('You are not authorized to delete this restaurant. Please create your own restaurant in order to delete.');}</script><body onload='myFunction()''>"    
-    if login_session['user_id'] != restaurant.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to add menu items to this restaurant. Please create your own restaurant in order to add items.');}</script><body onload='myFunction()''>"    
     if request.method=='POST':
         session.delete(deleteRestaurant)
         session.commit()

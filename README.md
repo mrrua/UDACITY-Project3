@@ -18,9 +18,14 @@ INTRODUCTION
 REQUIREMENTS
 -------------------------------------
  A. You will need Python installed (instructions for its installation can be found below). 
- B. You will need Werkzeug installed (v0.8.3).
- C. You will need Flask installed (v0.9).
- D. You will need Flask Login installed (v0.1.3).
+ 
+ The following packages also need to be installed within the environment you plan on running the application. If a version is defined, please install the specified version as newer ones may run into issues.
+ B. Werkzeug (v0.8.3).
+ C. Flask (v0.9).
+ D. Flask Login (v0.1.3).
+ E. SQLAlchemy
+ F. Requests
+ G. OAuth2Client
  
  Note: If running this on the UDACITY class provided Vagrant instance, you will need to downgrade manually to avoid the error: "raise TypeError(repr(o) + " is not JSON serializable") TypeError: <oauth2client.client.OAuth2Credentials object at 0xb57ea42c> is not JSON serializable"
  
